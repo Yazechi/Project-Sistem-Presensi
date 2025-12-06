@@ -1,22 +1,52 @@
+copilot/create-login-page
+# IDE and Editor files
+
 # Database
 *.sql.backup
 *.sql~
 *.log
 
 # IDE
+main
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+copilot/create-login-page
+.DS_Store
+
 
 # OS
 .DS_Store
 Thumbs.db
+main
 
 # Temporary files
 /tmp/
 *.tmp
+copilot/create-login-page
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Database config (if contains sensitive data)
+# config/database.php
+
+# PHP
+vendor/
+composer.phar
+composer.lock
+
+# Logs
+logs/
+*.log
+
+# Cache
+cache/
+*.cache
 
 # Environment
 .env
@@ -32,3 +62,4 @@ dist/
 build/
 *.zip
 *.tar.gz
+ main
