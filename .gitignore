@@ -1,14 +1,31 @@
+copilot/create-login-page
 # IDE and Editor files
+
+# Database
+*.sql.backup
+*.sql~
+*.log
+
+# IDE
+main
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+copilot/create-login-page
 .DS_Store
+
+
+# OS
+.DS_Store
+Thumbs.db
+main
 
 # Temporary files
 /tmp/
 *.tmp
+copilot/create-login-page
 *.log
 
 # Environment files
@@ -30,3 +47,19 @@ logs/
 # Cache
 cache/
 *.cache
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build artifacts
+dist/
+build/
+*.zip
+*.tar.gz
+ main
