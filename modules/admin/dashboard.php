@@ -17,7 +17,6 @@ if ($_SESSION['role'] != 'admin') {
 
 $nama = $_SESSION['nama'] ?? 'Administrator';
 $username = $_SESSION['username'] ?? '';
-$role = $_SESSION['role'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="id">

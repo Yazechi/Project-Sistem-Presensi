@@ -29,7 +29,8 @@ function getDBConnection() {
 }
 
 /**
- * Sanitize input to prevent SQL injection
+ * Sanitize input for display (XSS prevention)
+ * Note: For SQL queries, use prepared statements instead
  * @param mysqli $conn Database connection
  * @param string $data Input data to sanitize
  * @return string Sanitized data

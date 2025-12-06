@@ -17,7 +17,6 @@ if ($_SESSION['role'] != 'mahasiswa') {
 
 $nama = $_SESSION['nama'] ?? 'Mahasiswa';
 $username = $_SESSION['username'] ?? '';
-$role = $_SESSION['role'] ?? '';
 ?>
 <!DOCTYPE html>
 <html lang="id">

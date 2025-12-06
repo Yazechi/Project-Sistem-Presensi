@@ -17,8 +17,8 @@ function authenticateUser($username, $password) {
     try {
         $conn = getDBConnection();
         
-        // Sanitize input to prevent SQL injection
-        $username = sanitizeInput($conn, $username);
+        // Trim whitespace from username
+        $username = trim($username);
         
         // Prepare statement to prevent SQL injection
         $query = "SELECT id, username, password, nama, role, is_active FROM users WHERE username = ? AND is_active = 1";
