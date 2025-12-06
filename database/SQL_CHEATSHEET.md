@@ -365,8 +365,12 @@ LIMIT 5;
 -- Backup users
 CREATE TABLE users_backup AS SELECT * FROM users;
 
--- Backup presensi
-CREATE TABLE presensi_backup AS SELECT * FROM presensi_mahasiswa WHERE tanggal > '2024-01-01';
+-- Backup presensi (with date filter via jurnal)
+CREATE TABLE presensi_backup AS 
+SELECT pm.* 
+FROM presensi_mahasiswa pm
+JOIN jurnal_perkuliahan jp ON pm.id_jurnal = jp.id_jurnal
+WHERE jp.tanggal > '2024-01-01';
 ```
 
 ### Check Database Size

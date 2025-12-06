@@ -365,11 +365,12 @@ CREATE INDEX idx_presensi_status_jurnal ON presensi_mahasiswa(status, id_jurnal)
 -- CONSTRAINTS VALIDATION
 -- ============================================
 
--- Pastikan SKS tidak negatif
+-- Pastikan SKS adalah nilai positif (tidak boleh 0 atau negatif)
 ALTER TABLE matakuliah ADD CONSTRAINT chk_sks_positive CHECK (sks > 0);
 
--- Pastikan jam selesai lebih besar dari jam mulai (akan divalidasi di aplikasi)
--- ALTER TABLE jadwal_kuliah ADD CONSTRAINT chk_jam_valid CHECK (jam_selesai > jam_mulai);
+-- Note: Time validation (jam_selesai > jam_mulai) dilakukan di application layer
+-- karena MySQL CHECK constraint pada TIME comparison memiliki keterbatasan
+-- dan lebih baik divalidasi dengan trigger atau aplikasi untuk error handling yang lebih baik
 
 -- ============================================
 -- DOCUMENTATION
