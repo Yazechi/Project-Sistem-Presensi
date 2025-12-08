@@ -8,7 +8,7 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'sipres');
+define('DB_NAME', 'db_presensi_uas');
 
 /**
  * Get database connection
