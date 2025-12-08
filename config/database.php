@@ -8,7 +8,14 @@
 define('DB_HOST', 'localhost');
 define('DB_USER', 'root');
 define('DB_PASS', '');
-define('DB_NAME', 'sipres');
+define('DB_NAME', 'db_presensi_uas');
+
+// Role mapping for backward compatibility
+define('ROLE_MAPPING', [
+    'mhs' => 'mahasiswa',
+    'admin' => 'admin',
+    'dosen' => 'dosen'
+]);
 
 /**
  * Get database connection

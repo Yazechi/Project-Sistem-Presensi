@@ -21,7 +21,7 @@ function authenticateUser($username, $password) {
         $username = trim($username);
         
         // Prepare statement to prevent SQL injection
-        $query = "SELECT id, username, password, nama, role, is_active FROM users WHERE username = ? AND is_active = 1";
+        $query = "SELECT id_user, username, password, role FROM users WHERE username = ?";
         $stmt = $conn->prepare($query);
         
         if (!$stmt) {
@@ -38,18 +38,39 @@ function authenticateUser($username, $password) {
             
             // Verify password using password_verify
             if (password_verify($password, $user['password'])) {
-                // Update last login time
-                $update_query = "UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE id = ?";
-                $update_stmt = $conn->prepare($update_query);
-                $update_stmt->bind_param("i", $user['id']);
-                $update_stmt->execute();
-                $update_stmt->close();
+                // Get nama from profile table based on role
+                $nama = 'User';
+                if ($user['role'] === 'admin') {
+                    $profile_query = "SELECT nama_lengkap FROM admin WHERE user_id = ?";
+                } elseif ($user['role'] === 'dosen') {
+                    $profile_query = "SELECT nama_lengkap FROM dosen WHERE user_id = ?";
+                } elseif ($user['role'] === 'mhs') {
+                    $profile_query = "SELECT nama_lengkap FROM mahasiswa WHERE user_id = ?";
+                }
+                
+                if (isset($profile_query)) {
+                    $profile_stmt = $conn->prepare($profile_query);
+                    $profile_stmt->bind_param("i", $user['id_user']);
+                    $profile_stmt->execute();
+                    $profile_result = $profile_stmt->get_result();
+                    if ($profile_result->num_rows === 1) {
+                        $profile = $profile_result->fetch_assoc();
+                        $nama = $profile['nama_lengkap'];
+                    }
+                    $profile_stmt->close();
+                }
                 
                 $stmt->close();
                 $conn->close();
                 
+                // Normalize role name using ROLE_MAPPING constant
+                $normalized_role = ROLE_MAPPING[$user['role']] ?? $user['role'];
+                
                 // Remove password from returned data
                 unset($user['password']);
+                $user['id'] = $user['id_user'];
+                $user['nama'] = $nama;
+                $user['role'] = $normalized_role;
                 return $user;
             }
         }
