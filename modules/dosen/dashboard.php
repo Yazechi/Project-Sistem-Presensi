@@ -51,20 +51,25 @@ $username = $_SESSION['username'] ?? '';
         
         <div class="info-grid">
             <div class="info-card">
-                <h3>📋 Kelola Presensi</h3>
-                <p>Buat dan kelola presensi untuk kelas yang Anda ampu. Monitor kehadiran mahasiswa secara real-time.</p>
+                <h3>📋 Absensi Dosen</h3>
+                <p>Check-in dan check-out untuk membuka/menutup sesi perkuliahan. Dapatkan token unik untuk mahasiswa.</p>
+                <p style="margin-top: 10px;">
+                    <a href="absensi.php" style="display: inline-block; padding: 8px 16px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">Buka Halaman</a>
+                </p>
             </div>
             <div class="info-card">
-                <h3>📚 Mata Kuliah</h3>
-                <p>Lihat daftar mata kuliah yang Anda ajar. Atur jadwal pertemuan dan absensi.</p>
+                <h3>👥 Kelola Mahasiswa</h3>
+                <p>Set status kehadiran mahasiswa: Hadir, Izin, Sakit, atau Alpha untuk setiap sesi perkuliahan.</p>
+                <p style="margin-top: 10px;">
+                    <a href="kelola_mahasiswa.php" style="display: inline-block; padding: 8px 16px; background-color: #28a745; color: white; text-decoration: none; border-radius: 4px;">Buka Halaman</a>
+                </p>
             </div>
             <div class="info-card">
-                <h3>👥 Data Mahasiswa</h3>
-                <p>Akses data mahasiswa yang mengikuti mata kuliah Anda. Lihat riwayat kehadiran.</p>
-            </div>
-            <div class="info-card">
-                <h3>📊 Laporan Kehadiran</h3>
-                <p>Generate laporan kehadiran mahasiswa per mata kuliah atau per periode.</p>
+                <h3>📊 Log Presensi</h3>
+                <p>Lihat riwayat absensi dosen dan mahasiswa. Monitor statistik kehadiran per periode.</p>
+                <p style="margin-top: 10px;">
+                    <a href="log_presensi.php" style="display: inline-block; padding: 8px 16px; background-color: #17a2b8; color: white; text-decoration: none; border-radius: 4px;">Buka Halaman</a>
+                </p>
             </div>
         </div>
         
