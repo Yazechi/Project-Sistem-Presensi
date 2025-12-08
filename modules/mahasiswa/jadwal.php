@@ -31,7 +31,10 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows === 0) {
-    die("Error: Mahasiswa profile not found");
+    $stmt->close();
+    $conn->close();
+    header("Location: /modules/mahasiswa/dashboard.php?error=profile_not_found");
+    exit;
 }
 
 $mahasiswa_data = $result->fetch_assoc();

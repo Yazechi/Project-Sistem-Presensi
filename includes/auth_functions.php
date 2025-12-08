@@ -63,8 +63,8 @@ function authenticateUser($username, $password) {
                 $stmt->close();
                 $conn->close();
                 
-                // Normalize role name for consistency with existing code
-                $normalized_role = $user['role'] === 'mhs' ? 'mahasiswa' : $user['role'];
+                // Normalize role name using ROLE_MAPPING constant
+                $normalized_role = ROLE_MAPPING[$user['role']] ?? $user['role'];
                 
                 // Remove password from returned data
                 unset($user['password']);
