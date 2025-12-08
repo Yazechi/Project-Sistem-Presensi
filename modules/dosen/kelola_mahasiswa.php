@@ -291,6 +291,11 @@ $jurnal_list = getJurnalByDosen($id_dosen, 50);
             </div>
 
             <h3>👥 Daftar Mahasiswa</h3>
+            <p style="color: #666; font-size: 14px; margin-bottom: 10px;">
+                <em>Catatan: Menampilkan mahasiswa yang sudah melakukan presensi untuk sesi ini. 
+                Untuk menambah mahasiswa yang belum presensi (izin/sakit), mahasiswa harus presensi terlebih dahulu atau 
+                dosen dapat menambahkannya secara manual melalui sistem database.</em>
+            </p>
             <table class="mahasiswa-table">
                 <thead>
                     <tr>
@@ -317,7 +322,24 @@ $jurnal_list = getJurnalByDosen($id_dosen, 50);
                             <td><?php echo htmlspecialchars($mhs['jurusan']); ?></td>
                             <td><?php echo $mhs['waktu_scan'] ? date('H:i:s', strtotime($mhs['waktu_scan'])) : '-'; ?></td>
                             <td>
-                                <span class="status-badge <?php echo strtolower(str_replace(' ', '', $current_status)); ?>">
+                                <?php
+                                $status_class = 'belum';
+                                switch ($current_status) {
+                                    case 'Hadir':
+                                        $status_class = 'hadir';
+                                        break;
+                                    case 'Izin':
+                                        $status_class = 'izin';
+                                        break;
+                                    case 'Sakit':
+                                        $status_class = 'sakit';
+                                        break;
+                                    case 'Alpha':
+                                        $status_class = 'alpha';
+                                        break;
+                                }
+                                ?>
+                                <span class="status-badge <?php echo $status_class; ?>">
                                     <?php echo $current_status; ?>
                                 </span>
                             </td>

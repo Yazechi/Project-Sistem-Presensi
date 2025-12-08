@@ -72,7 +72,7 @@ function generateToken() {
 /**
  * Create new jurnal perkuliahan (check-in)
  */
-function bukaSesilPerkuliahan($id_jadwal, $tanggal, $jam_masuk, $materi) {
+function bukaSesiPerkuliahan($id_jadwal, $tanggal, $jam_masuk, $materi) {
     try {
         $conn = getDBConnection();
         $token = generateToken();
@@ -157,17 +157,17 @@ function getJurnalByDosen($id_dosen, $limit = 10) {
 
 /**
  * Get students for a specific jurnal session
+ * Returns students who have already checked in for this session
  */
 function getMahasiswaByJurnal($id_jurnal) {
     try {
         $conn = getDBConnection();
+        // First, get students who have attendance records for this session
         $query = "SELECT m.id_mahasiswa, m.nim, m.nama_lengkap, m.jurusan,
                          pm.id_presensi, pm.waktu_scan, pm.status, pm.keterangan
-                  FROM jurnal_perkuliahan jp
-                  JOIN jadwal_kuliah jk ON jp.id_jadwal = jk.id_jadwal
-                  CROSS JOIN mahasiswa m
-                  LEFT JOIN presensi_mahasiswa pm ON jp.id_jurnal = pm.id_jurnal AND m.id_mahasiswa = pm.id_mahasiswa
-                  WHERE jp.id_jurnal = ?
+                  FROM presensi_mahasiswa pm
+                  JOIN mahasiswa m ON pm.id_mahasiswa = m.id_mahasiswa
+                  WHERE pm.id_jurnal = ?
                   ORDER BY m.nama_lengkap";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("i", $id_jurnal);
@@ -184,6 +184,34 @@ function getMahasiswaByJurnal($id_jurnal) {
         return $mahasiswa;
     } catch (Exception $e) {
         error_log("Error getting mahasiswa: " . $e->getMessage());
+        return [];
+    }
+}
+
+/**
+ * Get all students (for enrollment - if needed in future)
+ * This function can be used when implementing course enrollment feature
+ */
+function getAllMahasiswa() {
+    try {
+        $conn = getDBConnection();
+        $query = "SELECT id_mahasiswa, nim, nama_lengkap, jurusan, angkatan
+                  FROM mahasiswa
+                  ORDER BY nama_lengkap";
+        $stmt = $conn->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        $mahasiswa = [];
+        while ($row = $result->fetch_assoc()) {
+            $mahasiswa[] = $row;
+        }
+        
+        $stmt->close();
+        $conn->close();
+        return $mahasiswa;
+    } catch (Exception $e) {
+        error_log("Error getting all mahasiswa: " . $e->getMessage());
         return [];
     }
 }

@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $jam_masuk = $_POST['jam_masuk'];
             $materi = trim($_POST['materi']);
             
-            $result = bukaSesilPerkuliahan($id_jadwal, $tanggal, $jam_masuk, $materi);
+            $result = bukaSesiPerkuliahan($id_jadwal, $tanggal, $jam_masuk, $materi);
             
             if ($result['success']) {
                 $message = "Sesi berhasil dibuka! Token: " . $result['token'];

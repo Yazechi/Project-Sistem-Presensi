@@ -167,7 +167,7 @@ foreach ($rekap as $r) {
         .filter-form {
             display: flex;
             gap: 15px;
-            align-items: end;
+            align-items: flex-end;
         }
         .filter-form .form-group {
             margin-bottom: 0;
