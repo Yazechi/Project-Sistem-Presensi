@@ -183,16 +183,26 @@ $_SESSION = [
 **Access**: Role `dosen`
 
 **Features**:
-- 📋 Kelola Presensi
-- 📚 Mata Kuliah
-- 👥 Data Mahasiswa
-- 📊 Laporan Kehadiran
+- 📋 **Absensi Dosen** (`absensi.php`) - Check-in/check-out untuk membuka dan menutup sesi perkuliahan
+- 👥 **Kelola Mahasiswa** (`kelola_mahasiswa.php`) - Set status kehadiran mahasiswa (Hadir, Izin, Sakit, Alpha)
+- 📊 **Log Presensi** (`log_presensi.php`) - View attendance logs untuk dosen dan mahasiswa
 
 **Responsibilities**:
-- Buat dan kelola presensi kelas
-- Monitor kehadiran mahasiswa
-- Akses data mahasiswa di kelas
-- Generate laporan kehadiran
+- Check-in untuk membuka sesi perkuliahan dan generate token unik
+- Check-out untuk menutup sesi perkuliahan
+- Set dan update status kehadiran mahasiswa secara manual
+- Monitor kehadiran mahasiswa real-time
+- View riwayat absensi lengkap dengan statistik
+- Generate laporan kehadiran per periode
+
+**Workflow**:
+1. Dosen check-in → sistem generate token 6 karakter
+2. Mahasiswa input token untuk presensi otomatis
+3. Dosen dapat set status manual untuk mahasiswa yang izin/sakit
+4. Dosen check-out untuk menutup sesi
+5. Review log presensi dengan filter periode
+
+See detailed documentation: `/modules/dosen/README.md`
 
 ### Mahasiswa Dashboard
 **Path**: `/modules/mahasiswa/dashboard.php`
@@ -237,13 +247,18 @@ Project-Sstem-Presensi/
 │   └── session.php            # Session management
 │
 ├── includes/                   # Shared functions
-│   └── auth_functions.php     # Authentication functions
+│   ├── auth_functions.php     # Authentication functions
+│   └── dosen_functions.php    # Dosen-specific functions
 │
 ├── modules/                    # Role-specific modules
 │   ├── admin/
 │   │   └── dashboard.php      # Admin dashboard
 │   ├── dosen/
-│   │   └── dashboard.php      # Dosen dashboard
+│   │   ├── dashboard.php      # Dosen dashboard
+│   │   ├── absensi.php        # Dosen check-in/check-out
+│   │   ├── kelola_mahasiswa.php # Manage student attendance
+│   │   ├── log_presensi.php   # View attendance logs
+│   │   └── README.md          # Dosen module documentation
 │   └── mahasiswa/
 │       └── dashboard.php      # Mahasiswa dashboard
 │
