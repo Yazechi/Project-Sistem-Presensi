@@ -50,18 +50,24 @@ $username = $_SESSION['username'] ?? '';
         </div>
         
         <div class="info-grid">
-            <div class="info-card">
-                <h3>✅ Presensi Online</h3>
-                <p>Lakukan absensi untuk mata kuliah yang Anda ikuti. Gunakan kode QR atau kode unik yang diberikan dosen.</p>
-            </div>
-            <div class="info-card">
-                <h3>📅 Jadwal Kuliah</h3>
-                <p>Lihat jadwal kuliah Anda. Cek waktu dan tempat perkuliahan secara real-time.</p>
-            </div>
-            <div class="info-card">
-                <h3>📊 Riwayat Kehadiran</h3>
-                <p>Monitor kehadiran Anda di setiap mata kuliah. Lihat persentase kehadiran per matkul.</p>
-            </div>
+            <a href="/modules/mahasiswa/absensi.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>✅ Presensi Online</h3>
+                    <p>Lakukan absensi untuk mata kuliah yang Anda ikuti. Gunakan token unik yang diberikan dosen.</p>
+                </div>
+            </a>
+            <a href="/modules/mahasiswa/jadwal.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>📅 Jadwal & Forum</h3>
+                    <p>Lihat jadwal kuliah, informasi dosen, dan forum yang sedang berlangsung.</p>
+                </div>
+            </a>
+            <a href="/modules/mahasiswa/riwayat.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>📊 Riwayat Kehadiran</h3>
+                    <p>Monitor kehadiran Anda di setiap mata kuliah dengan detail jam masuk dan keluar.</p>
+                </div>
+            </a>
             <div class="info-card">
                 <h3>📈 Statistik Presensi</h3>
                 <p>Lihat statistik kehadiran Anda. Pastikan kehadiran memenuhi syarat minimal.</p>
