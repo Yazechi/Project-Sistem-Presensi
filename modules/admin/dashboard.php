@@ -50,22 +50,30 @@ $username = $_SESSION['username'] ?? '';
         </div>
         
         <div class="info-grid">
-            <div class="info-card">
-                <h3>📊 Manajemen Data</h3>
-                <p>Kelola data pengguna, dosen, dan mahasiswa. Atur hak akses dan permissions untuk setiap role.</p>
-            </div>
-            <div class="info-card">
-                <h3>👥 Manajemen User</h3>
-                <p>Tambah, edit, atau hapus akun pengguna. Monitor aktivitas login dan akses sistem.</p>
-            </div>
-            <div class="info-card">
-                <h3>⚙️ Konfigurasi Sistem</h3>
-                <p>Atur pengaturan sistem, backup database, dan maintenance aplikasi.</p>
-            </div>
-            <div class="info-card">
-                <h3>📈 Laporan & Statistik</h3>
-                <p>Lihat statistik presensi, generate laporan, dan analisis data kehadiran.</p>
-            </div>
+            <a href="/modules/admin/absensi.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>📊 Cek Absensi</h3>
+                    <p>Monitor absensi dosen dan mahasiswa. Lihat statistik kehadiran real-time dan riwayat presensi lengkap.</p>
+                </div>
+            </a>
+            <a href="/modules/admin/kelola_forum.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>📝 Kelola Forum Absensi</h3>
+                    <p>Buat dan kelola forum absensi untuk dosen dan mahasiswa. Generate token presensi otomatis.</p>
+                </div>
+            </a>
+            <a href="/modules/admin/kelola_pengguna.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>👥 Kelola Pengguna</h3>
+                    <p>Tambah, edit, atau hapus data dosen dan mahasiswa. Kelola akun pengguna sistem.</p>
+                </div>
+            </a>
+            <a href="/modules/admin/log_aktivitas.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>📋 Log Aktivitas</h3>
+                    <p>Lihat semua aktivitas sistem termasuk login, presensi, dan perubahan data pengguna.</p>
+                </div>
+            </a>
         </div>
         
         <div class="security-info">
