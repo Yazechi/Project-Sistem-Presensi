@@ -30,7 +30,7 @@ $logs = getActivityLogs($start_date, $end_date, $search);
 if (empty($logs)) {
     // Get recent activities from attendance records as alternative
     try {
-        $conn = require_once __DIR__ . '/../../config/database.php';
+        require_once __DIR__ . '/../../config/database.php';
         $conn = getDBConnection();
         
         // Get recent jurnal perkuliahan activities

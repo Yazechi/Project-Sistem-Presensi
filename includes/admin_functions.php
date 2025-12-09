@@ -572,8 +572,9 @@ function getAllJadwal() {
 function generateToken() {
     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     $token = '';
+    $max = strlen($characters) - 1;
     for ($i = 0; $i < 6; $i++) {
-        $token .= $characters[rand(0, strlen($characters) - 1)];
+        $token .= $characters[random_int(0, $max)];
     }
     return $token;
 }
