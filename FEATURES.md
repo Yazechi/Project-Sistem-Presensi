@@ -307,19 +307,6 @@ Project-Sstem-Presensi/
 ├── INSTALLATION.md             # Installation guide
 └── .gitignore                  # Git ignore rules
 ```
-│   │   ├── login.css          # Login page styles
-│   │   └── dashboard.css      # Dashboard styles
-│   └── js/                    # JavaScript files
-│
-├── database/                   # Database files
-│   ├── sipres.sql             # Database schema
-│   └── create_demo_users.php  # Demo user generator
-│
-├── index.php                   # Entry point
-├── README.md                   # Project documentation
-├── INSTALLATION.md             # Installation guide
-└── .gitignore                  # Git ignore rules
-```
 
 ---
 
