@@ -660,6 +660,272 @@ function closeForumAbsensi($id_jurnal, $jam_keluar) {
 }
 
 /**
+ * Add new matakuliah
+ */
+function addMatakuliah($kode_mk, $nama_mk, $sks, $semester) {
+    try {
+        $conn = getDBConnection();
+        
+        // Check if kode_mk already exists
+        $check = $conn->prepare("SELECT id_mk FROM matakuliah WHERE kode_mk = ?");
+        $check->bind_param("s", $kode_mk);
+        $check->execute();
+        if ($check->get_result()->num_rows > 0) {
+            $check->close();
+            $conn->close();
+            return ['success' => false, 'message' => 'Kode mata kuliah sudah ada!'];
+        }
+        $check->close();
+        
+        $query = "INSERT INTO matakuliah (kode_mk, nama_mk, sks, semester) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssii", $kode_mk, $nama_mk, $sks, $semester);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to add matakuliah");
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return ['success' => true, 'message' => 'Mata kuliah berhasil ditambahkan'];
+    } catch (Exception $e) {
+        if (isset($conn)) {
+            $conn->close();
+        }
+        error_log("Error adding matakuliah: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Gagal menambahkan mata kuliah: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Update matakuliah
+ */
+function updateMatakuliah($id_mk, $kode_mk, $nama_mk, $sks, $semester) {
+    try {
+        $conn = getDBConnection();
+        
+        // Check if kode_mk already exists for other record
+        $check = $conn->prepare("SELECT id_mk FROM matakuliah WHERE kode_mk = ? AND id_mk != ?");
+        $check->bind_param("si", $kode_mk, $id_mk);
+        $check->execute();
+        if ($check->get_result()->num_rows > 0) {
+            $check->close();
+            $conn->close();
+            return ['success' => false, 'message' => 'Kode mata kuliah sudah digunakan!'];
+        }
+        $check->close();
+        
+        $query = "UPDATE matakuliah SET kode_mk = ?, nama_mk = ?, sks = ?, semester = ? WHERE id_mk = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("ssiii", $kode_mk, $nama_mk, $sks, $semester, $id_mk);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update matakuliah");
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return ['success' => true, 'message' => 'Mata kuliah berhasil diperbarui'];
+    } catch (Exception $e) {
+        if (isset($conn)) {
+            $conn->close();
+        }
+        error_log("Error updating matakuliah: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Gagal memperbarui mata kuliah: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Delete matakuliah
+ */
+function deleteMatakuliah($id_mk) {
+    try {
+        $conn = getDBConnection();
+        
+        // Check if used in jadwal_kuliah
+        $check = $conn->prepare("SELECT id_jadwal FROM jadwal_kuliah WHERE id_mk = ? LIMIT 1");
+        $check->bind_param("i", $id_mk);
+        $check->execute();
+        if ($check->get_result()->num_rows > 0) {
+            $check->close();
+            $conn->close();
+            return ['success' => false, 'message' => 'Mata kuliah tidak dapat dihapus karena masih digunakan di jadwal!'];
+        }
+        $check->close();
+        
+        $query = "DELETE FROM matakuliah WHERE id_mk = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id_mk);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to delete matakuliah");
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return ['success' => true, 'message' => 'Mata kuliah berhasil dihapus'];
+    } catch (Exception $e) {
+        if (isset($conn)) {
+            $conn->close();
+        }
+        error_log("Error deleting matakuliah: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Gagal menghapus mata kuliah: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Add new jadwal_kuliah
+ */
+function addJadwalKuliah($id_mk, $id_dosen, $hari, $jam_mulai, $jam_selesai, $ruangan) {
+    try {
+        $conn = getDBConnection();
+        
+        $query = "INSERT INTO jadwal_kuliah (id_mk, id_dosen, hari, jam_mulai, jam_selesai, ruangan) 
+                  VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iissss", $id_mk, $id_dosen, $hari, $jam_mulai, $jam_selesai, $ruangan);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to add jadwal");
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return ['success' => true, 'message' => 'Jadwal kuliah berhasil ditambahkan'];
+    } catch (Exception $e) {
+        if (isset($conn)) {
+            $conn->close();
+        }
+        error_log("Error adding jadwal: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Gagal menambahkan jadwal: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Update jadwal_kuliah
+ */
+function updateJadwalKuliah($id_jadwal, $id_mk, $id_dosen, $hari, $jam_mulai, $jam_selesai, $ruangan) {
+    try {
+        $conn = getDBConnection();
+        
+        $query = "UPDATE jadwal_kuliah SET id_mk = ?, id_dosen = ?, hari = ?, jam_mulai = ?, jam_selesai = ?, ruangan = ? 
+                  WHERE id_jadwal = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("iissssi", $id_mk, $id_dosen, $hari, $jam_mulai, $jam_selesai, $ruangan, $id_jadwal);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to update jadwal");
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return ['success' => true, 'message' => 'Jadwal kuliah berhasil diperbarui'];
+    } catch (Exception $e) {
+        if (isset($conn)) {
+            $conn->close();
+        }
+        error_log("Error updating jadwal: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Gagal memperbarui jadwal: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Delete jadwal_kuliah
+ */
+function deleteJadwalKuliah($id_jadwal) {
+    try {
+        $conn = getDBConnection();
+        
+        // Check if used in jurnal_perkuliahan
+        $check = $conn->prepare("SELECT id_jurnal FROM jurnal_perkuliahan WHERE id_jadwal = ? LIMIT 1");
+        $check->bind_param("i", $id_jadwal);
+        $check->execute();
+        if ($check->get_result()->num_rows > 0) {
+            $check->close();
+            $conn->close();
+            return ['success' => false, 'message' => 'Jadwal tidak dapat dihapus karena sudah ada jurnal perkuliahan!'];
+        }
+        $check->close();
+        
+        $query = "DELETE FROM jadwal_kuliah WHERE id_jadwal = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id_jadwal);
+        
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to delete jadwal");
+        }
+        
+        $stmt->close();
+        $conn->close();
+        
+        return ['success' => true, 'message' => 'Jadwal kuliah berhasil dihapus'];
+    } catch (Exception $e) {
+        if (isset($conn)) {
+            $conn->close();
+        }
+        error_log("Error deleting jadwal: " . $e->getMessage());
+        return ['success' => false, 'message' => 'Gagal menghapus jadwal: ' . $e->getMessage()];
+    }
+}
+
+/**
+ * Get matakuliah by ID
+ */
+function getMatakuliahById($id_mk) {
+    try {
+        $conn = getDBConnection();
+        
+        $query = "SELECT * FROM matakuliah WHERE id_mk = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id_mk);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $matakuliah = $result->fetch_assoc();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $matakuliah;
+    } catch (Exception $e) {
+        error_log("Error getting matakuliah: " . $e->getMessage());
+        return null;
+    }
+}
+
+/**
+ * Get jadwal by ID
+ */
+function getJadwalById($id_jadwal) {
+    try {
+        $conn = getDBConnection();
+        
+        $query = "SELECT jk.*, mk.kode_mk, mk.nama_mk, d.nama_lengkap as nama_dosen
+                  FROM jadwal_kuliah jk
+                  JOIN matakuliah mk ON jk.id_mk = mk.id_mk
+                  JOIN dosen d ON jk.id_dosen = d.id_dosen
+                  WHERE jk.id_jadwal = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $id_jadwal);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $jadwal = $result->fetch_assoc();
+        
+        $stmt->close();
+        $conn->close();
+        
+        return $jadwal;
+    } catch (Exception $e) {
+        error_log("Error getting jadwal: " . $e->getMessage());
+        return null;
+    }
+}
+
+/**
  * Get activity logs (from database if log table exists, or return empty array)
  */
 function getActivityLogs($start_date = null, $end_date = null, $search = '') {
