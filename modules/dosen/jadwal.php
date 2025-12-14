@@ -166,13 +166,13 @@ foreach ($jadwal_list as $jadwal) {
         <a href="/modules/dosen/dashboard.php" class="back-link">← Kembali ke Dashboard</a>
 
         <div class="info-box">
-            <p><strong>ℹ️ Informasi:</strong> Berikut adalah daftar mata kuliah yang telah diassign kepada Anda oleh admin. Setiap mata kuliah memiliki jadwal perkuliahan yang dapat Anda gunakan untuk membuka sesi absensi.</p>
+            <p><strong>ℹ️ Informasi:</strong> Berikut adalah daftar mata kuliah yang telah ditugaskan kepada Anda oleh admin. Setiap mata kuliah memiliki jadwal perkuliahan yang dapat Anda gunakan untuk membuka sesi absensi.</p>
         </div>
 
         <?php if (empty($courses)): ?>
             <div class="empty-state">
                 <h3>📚 Belum Ada Mata Kuliah</h3>
-                <p>Anda belum diassign ke mata kuliah manapun. Silakan hubungi admin untuk assignment mata kuliah.</p>
+                <p>Anda belum ditugaskan ke mata kuliah manapun. Silakan hubungi admin untuk penugasan mata kuliah.</p>
             </div>
         <?php else: ?>
             <div class="course-grid">

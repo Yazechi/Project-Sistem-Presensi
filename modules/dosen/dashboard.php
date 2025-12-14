@@ -52,7 +52,7 @@ $username = $_SESSION['username'] ?? '';
         <div class="info-grid">
             <div class="info-card">
                 <h3>📚 Mata Kuliah Saya</h3>
-                <p>Lihat semua mata kuliah yang telah diassign kepada Anda beserta jadwal perkuliahan lengkap.</p>
+                <p>Lihat semua mata kuliah yang telah ditugaskan kepada Anda beserta jadwal perkuliahan lengkap.</p>
                 <p style="margin-top: 10px;">
                     <a href="jadwal.php" style="display: inline-block; padding: 8px 16px; background-color: #6f42c1; color: white; text-decoration: none; border-radius: 4px;">Lihat Mata Kuliah</a>
                 </p>

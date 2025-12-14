@@ -259,7 +259,7 @@ $dosen_list = getAllDosen();
 
         <div class="info-box">
             <h4>ℹ️ Informasi</h4>
-            <p>Halaman ini digunakan untuk membuat jadwal kuliah dan mengassign dosen ke mata kuliah tertentu. Setiap jadwal akan menjadi "room" tempat dosen membuka sesi dan mahasiswa melakukan presensi.</p>
+            <p>Halaman ini digunakan untuk membuat jadwal kuliah dan menugaskan dosen ke mata kuliah tertentu. Setiap jadwal akan menjadi "room" tempat dosen membuka sesi dan mahasiswa melakukan presensi.</p>
         </div>
 
         <?php if ($message): ?>

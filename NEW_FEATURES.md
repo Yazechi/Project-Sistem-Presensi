@@ -133,11 +133,11 @@ CREATE TABLE IF NOT EXISTS enrollment (
 ### Admin Requirements
 ✅ 1. Mengelola user dosen atau mahasiswa - Already implemented
 ✅ 2. Melihat data histori absensi - Already implemented
-✅ 3. Membuat room matkul untuk dosen dan mengassign satu dosen - **NEW: kelola_matakuliah.php & kelola_jadwal.php**
+✅ 3. Membuat room matkul untuk dosen dan menugaskan satu dosen - **NEW: kelola_matakuliah.php & kelola_jadwal.php**
 ✅ 4. Membuat forum absensi untuk dosen (harian) - Already implemented
 
 ### Dosen Requirements
-✅ 1. Masuk ke room/forum yang sudah di assign - **NEW: jadwal.php**
+✅ 1. Masuk ke room/forum yang sudah ditugaskan - **NEW: jadwal.php**
 ✅ 2. Menambahkan jadwal pengabsensian - Handled through check-in system (existing)
 ✅ 3. Melihat data mahasiswa yang telah mengabsen - Already implemented
 ✅ 4. Melakukan absensi harian - Already implemented
