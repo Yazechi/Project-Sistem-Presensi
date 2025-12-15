@@ -166,16 +166,20 @@ $_SESSION = [
 **Access**: Role `admin`
 
 **Features**:
-- 📊 Manajemen Data
-- 👥 Manajemen User
-- ⚙️ Konfigurasi Sistem
-- 📈 Laporan & Statistik
+- 📚 **Kelola Mata Kuliah** (`kelola_matakuliah.php`) - CRUD mata kuliah (course rooms)
+- 📅 **Kelola Jadwal & Assignment** (`kelola_jadwal.php`) - Create schedules and assign dosen to courses
+- 👥 **Kelola Pengguna** (`kelola_pengguna.php`) - User management (CRUD dosen & mahasiswa)
+- 📊 **Cek Absensi** (`absensi.php`) - Monitor attendance history
+- 📝 **Kelola Forum Absensi** (`kelola_forum.php`) - Create daily attendance forums
+- 📋 **Log Aktivitas** (`log_aktivitas.php`) - View system activity logs
 
 **Responsibilities**:
+- Kelola mata kuliah (add, edit, delete)
+- Buat jadwal kuliah dan assign dosen ke mata kuliah
 - Kelola semua user (Admin, Dosen, Mahasiswa)
-- Atur hak akses dan permissions
-- Konfigurasi sistem dan backup database
-- Generate laporan dan analisis data
+- Monitor histori absensi dosen dan mahasiswa
+- Buat forum absensi harian (kecuali weekend/libur)
+- View activity logs
 
 ### Dosen Dashboard
 **Path**: `/modules/dosen/dashboard.php`
@@ -183,24 +187,27 @@ $_SESSION = [
 **Access**: Role `dosen`
 
 **Features**:
+- 📚 **Mata Kuliah Saya** (`jadwal.php`) - View assigned courses and schedules
 - 📋 **Absensi Dosen** (`absensi.php`) - Check-in/check-out untuk membuka dan menutup sesi perkuliahan
 - 👥 **Kelola Mahasiswa** (`kelola_mahasiswa.php`) - Set status kehadiran mahasiswa (Hadir, Izin, Sakit, Alpha)
 - 📊 **Log Presensi** (`log_presensi.php`) - View attendance logs untuk dosen dan mahasiswa
 
 **Responsibilities**:
+- View mata kuliah yang telah diassign oleh admin
 - Check-in untuk membuka sesi perkuliahan dan generate token unik
 - Check-out untuk menutup sesi perkuliahan
 - Set dan update status kehadiran mahasiswa secara manual
 - Monitor kehadiran mahasiswa real-time
 - View riwayat absensi lengkap dengan statistik
-- Generate laporan kehadiran per periode
+- Melakukan absensi harian
 
 **Workflow**:
-1. Dosen check-in → sistem generate token 6 karakter
-2. Mahasiswa input token untuk presensi otomatis
-3. Dosen dapat set status manual untuk mahasiswa yang izin/sakit
-4. Dosen check-out untuk menutup sesi
-5. Review log presensi dengan filter periode
+1. View mata kuliah yang diassign dari menu "Mata Kuliah Saya"
+2. Dosen check-in → sistem generate token 6 karakter
+3. Mahasiswa input token untuk presensi otomatis
+4. Dosen dapat set status manual untuk mahasiswa yang izin/sakit
+5. Dosen check-out untuk menutup sesi
+6. Review log presensi dengan filter periode
 
 See detailed documentation: `/modules/dosen/README.md`
 
@@ -210,16 +217,23 @@ See detailed documentation: `/modules/dosen/README.md`
 **Access**: Role `mahasiswa`
 
 **Features**:
-- ✅ Presensi Online
-- 📅 Jadwal Kuliah
-- 📊 Riwayat Kehadiran
-- 📈 Statistik Presensi
+- 🎓 **Gabung Mata Kuliah** (`gabung.php`) - Enroll/join course rooms
+- ✅ **Presensi Online** (`absensi.php`) - Submit attendance using token
+- 📅 **Jadwal Kuliah** (`jadwal.php`) - View class schedules
+- 📊 **Riwayat Kehadiran** (`riwayat.php`) - View attendance history
 
 **Responsibilities**:
-- Lakukan absensi online
-- Lihat jadwal kuliah
+- Masuk atau gabung ke room/forum dari dosen
+- Lakukan absensi online menggunakan token
+- Lihat jadwal kuliah yang diikuti
 - Monitor kehadiran sendiri
-- Cek persentase kehadiran
+- View histori absensi per mata kuliah
+
+**Workflow**:
+1. Gabung ke mata kuliah melalui menu "Gabung Mata Kuliah"
+2. View jadwal kuliah yang sudah diikuti
+3. Input token saat dosen membuka sesi untuk presensi
+4. View riwayat kehadiran dan statistik
 
 ---
 
@@ -248,19 +262,32 @@ Project-Sstem-Presensi/
 │
 ├── includes/                   # Shared functions
 │   ├── auth_functions.php     # Authentication functions
-│   └── dosen_functions.php    # Dosen-specific functions
+│   ├── admin_functions.php    # Admin-specific functions
+│   ├── dosen_functions.php    # Dosen-specific functions
+│   └── mahasiswa_functions.php # Mahasiswa-specific functions
 │
 ├── modules/                    # Role-specific modules
 │   ├── admin/
-│   │   └── dashboard.php      # Admin dashboard
+│   │   ├── dashboard.php      # Admin dashboard
+│   │   ├── kelola_matakuliah.php # Manage courses (CRUD)
+│   │   ├── kelola_jadwal.php  # Manage schedules & assign dosen
+│   │   ├── kelola_pengguna.php # User management
+│   │   ├── absensi.php        # View attendance history
+│   │   ├── kelola_forum.php   # Manage attendance forums
+│   │   └── log_aktivitas.php  # Activity logs
 │   ├── dosen/
 │   │   ├── dashboard.php      # Dosen dashboard
+│   │   ├── jadwal.php         # View assigned courses/schedules
 │   │   ├── absensi.php        # Dosen check-in/check-out
 │   │   ├── kelola_mahasiswa.php # Manage student attendance
 │   │   ├── log_presensi.php   # View attendance logs
 │   │   └── README.md          # Dosen module documentation
 │   └── mahasiswa/
-│       └── dashboard.php      # Mahasiswa dashboard
+│       ├── dashboard.php      # Mahasiswa dashboard
+│       ├── gabung.php         # Enroll/join courses
+│       ├── absensi.php        # Submit attendance
+│       ├── jadwal.php         # View schedules
+│       └── riwayat.php        # View attendance history
 │
 ├── assets/                     # Static assets
 │   ├── css/
@@ -269,11 +296,14 @@ Project-Sstem-Presensi/
 │   └── js/                    # JavaScript files
 │
 ├── database/                   # Database files
-│   ├── sipres.sql             # Database schema
+│   ├── db_presensi_uas.sql    # Main database schema
+│   ├── enrollment_migration.sql # Enrollment system migration
+│   ├── sipres.sql             # Alternative schema
 │   └── create_demo_users.php  # Demo user generator
 │
 ├── index.php                   # Entry point
 ├── README.md                   # Project documentation
+├── FEATURES.md                 # Feature documentation
 ├── INSTALLATION.md             # Installation guide
 └── .gitignore                  # Git ignore rules
 ```

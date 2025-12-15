@@ -50,6 +50,12 @@ $username = $_SESSION['username'] ?? '';
         </div>
         
         <div class="info-grid">
+            <a href="/modules/mahasiswa/gabung.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>🎓 Gabung Mata Kuliah</h3>
+                    <p>Daftar dan bergabung ke mata kuliah yang tersedia. Pilih jadwal yang sesuai dengan kelas Anda.</p>
+                </div>
+            </a>
             <a href="/modules/mahasiswa/absensi.php" style="text-decoration: none;">
                 <div class="info-card">
                     <h3>✅ Presensi Online</h3>
@@ -68,10 +74,6 @@ $username = $_SESSION['username'] ?? '';
                     <p>Monitor kehadiran Anda di setiap mata kuliah dengan detail jam masuk dan keluar.</p>
                 </div>
             </a>
-            <div class="info-card">
-                <h3>📈 Statistik Presensi</h3>
-                <p>Lihat statistik kehadiran Anda. Pastikan kehadiran memenuhi syarat minimal.</p>
-            </div>
         </div>
         
         <div class="security-info">

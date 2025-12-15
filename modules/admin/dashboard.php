@@ -50,6 +50,24 @@ $username = $_SESSION['username'] ?? '';
         </div>
         
         <div class="info-grid">
+            <a href="/modules/admin/kelola_matakuliah.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>📚 Kelola Mata Kuliah</h3>
+                    <p>Tambah, edit, atau hapus mata kuliah (course room). Kelola master data mata kuliah sistem.</p>
+                </div>
+            </a>
+            <a href="/modules/admin/kelola_jadwal.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>📅 Kelola Jadwal & Assignment</h3>
+                    <p>Buat jadwal kuliah dan assign dosen ke mata kuliah. Atur waktu dan ruangan perkuliahan.</p>
+                </div>
+            </a>
+            <a href="/modules/admin/kelola_pengguna.php" style="text-decoration: none;">
+                <div class="info-card">
+                    <h3>👥 Kelola Pengguna</h3>
+                    <p>Tambah, edit, atau hapus data dosen dan mahasiswa. Kelola akun pengguna sistem.</p>
+                </div>
+            </a>
             <a href="/modules/admin/absensi.php" style="text-decoration: none;">
                 <div class="info-card">
                     <h3>📊 Cek Absensi</h3>
@@ -60,12 +78,6 @@ $username = $_SESSION['username'] ?? '';
                 <div class="info-card">
                     <h3>📝 Kelola Forum Absensi</h3>
                     <p>Buat dan kelola forum absensi untuk dosen dan mahasiswa. Generate token presensi otomatis.</p>
-                </div>
-            </a>
-            <a href="/modules/admin/kelola_pengguna.php" style="text-decoration: none;">
-                <div class="info-card">
-                    <h3>👥 Kelola Pengguna</h3>
-                    <p>Tambah, edit, atau hapus data dosen dan mahasiswa. Kelola akun pengguna sistem.</p>
                 </div>
             </a>
             <a href="/modules/admin/log_aktivitas.php" style="text-decoration: none;">
